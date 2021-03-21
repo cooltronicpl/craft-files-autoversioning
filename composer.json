@@ -1,0 +1,46 @@
+{
+  "name": "cooltronicpl/craft-files-autoversioning",
+  "description": "This extesnion add parameter to refresh static files from files or from an external files",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "assets",
+    "cache"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "cooltronicpl",
+      "homepage": "https://cooltronic.pl"
+    },
+    {
+        "name": "Paweł Potacki",
+        "homepage": "https://cooltronic.pl"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/cooltronicpl/craft-files-autoversioning",
+    "docs": "https://github.com/cooltronicpl/craft-files-autoversioning/blob/master/README.md",
+    "issues": "https://github.com/cooltronicpl/craft-files-autoversioning/issues"
+  },
+  "require": {
+    "craftcms/cms": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "cooltronicpl\\autoversioning\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "craft3-files-autoversioning",
+    "class": "cooltronicpl\\autoversioning\\Autoversioning",
+    "name": "Static Files Autoversioning",
+    "description": "Twig extension which enable to automatically version your static files.",
+    "hasCpSettings": false,
+    "hasCpSection": false
+  }
+}
