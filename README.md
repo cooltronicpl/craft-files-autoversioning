@@ -58,7 +58,7 @@ will result this:
 
 The plugin serch files to version in @web directory by default, and build.txt in root path.
 
-With ❤ by [cooltronicpl](https://cooltronic.pl)
+With ❤ by [CoolTRONIC.pl sp. z o.o.](https://cooltronic.pl) by [Pawel Potacki](https://potacki.com)
 
 ## License
 
