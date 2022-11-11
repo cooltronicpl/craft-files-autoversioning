@@ -20,11 +20,12 @@ use craft\events\PluginEvent;
 use yii\base\Event;
 
 /**
- * Class Craft3AssetsAutoversioning
- *
- * @author    cooltronicpl
- * @package   Craft3AssetsAutoversioning
- * @since     0.1
+ * Class Autoversioning
+
+ * @author    CoolTRONIC.pl sp. z o.o. https://cooltronic.pl
+ * @author    Pawel Potacki https://potacki.com
+ * @package   Autoversioning
+ * @since     1.0.0
  *
  */
 class Autoversioning extends Plugin
@@ -43,7 +44,7 @@ class Autoversioning extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '0.1';
+    public string $schemaVersion = '2.0.0';
 
     // Public Methods
     // =========================================================================
@@ -67,14 +68,6 @@ class Autoversioning extends Plugin
             }
         );
 
-        Craft::info(
-            Craft::t(
-                'craft3-files-autoversioning',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
 
     // Protected Methods

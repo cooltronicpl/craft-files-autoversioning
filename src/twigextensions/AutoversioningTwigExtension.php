@@ -11,13 +11,16 @@
 namespace cooltronicpl\autoversioning\twigextensions;
 
 use Craft;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
- * @author    cooltronicpl
- * @package   Craft3AssetsAutoversioning
- * @since     0.1
+ * @author    CoolTRONIC.pl sp. z o.o. https://cooltronic.pl
+ * @author    Pawel Potacki https://potacki.com
+ * @package   AutoversioningTwigExtension
+ * @since     1.0.0
  */
-class AutoversioningTwigExtension extends \Twig_Extension
+class AutoversioningTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -32,9 +35,9 @@ class AutoversioningTwigExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return [
-            new \Twig_SimpleFunction('version', [$this, 'versioningFile']),
-        ];
+        return array(
+            new TwigFunction('version', [$this, 'versioningFile']),
+        );
     }
 
     public function versioningFile($file)

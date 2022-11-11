@@ -1,8 +1,9 @@
-# Static Files Autoversioning plugin for Craft CMS 3.x
+# Static Files Autoversioning plugin for Craft CMS 3.x or 4.x
 
-![Icon](resources/refresh.png)
+![Icon](resources/black.png#gh-light-mode-only)
+![Icon](resources/white.png#gh-dark-mode-only)
 
-A really basic Twig extension for CraftCMS that helps you cache-bust your assets.
+A really basic Twig extension development plugin for CraftCMS that helps you cache-bust your assets.
 
 ## Background
 
@@ -10,7 +11,8 @@ To force the browser to download the new asset file after a update, the plugin a
 
 ## Requirements
 
- * Craft CMS >= 3.0.0
+ * Craft CMS >= 3.0.0 in 1.x branch
+ * Craft CMS >= 4.0.0 in 2.x branch
 
 ## Installation
 ### Project
@@ -48,11 +50,29 @@ will result this:
 <link rel="stylesheet" href="/css/styles.css?v=12345678">
 ```
 
-## Advanced usage
-If you want have a link path use the function:
-  <link rel="stylesheet" href="{{alias('@web')}}{{version('/css/styles.css')}}">
-will result this:
-<link rel="stylesheet" href="http/s://server/@web/plugins/splide/css/splide.min.css">
+## Advanced example
+When you have caching policy for many files, like videos, PDFs any other you can use this plugin to pass the actual file, after update link of shortand in example:
+```
+<a href="{{alias('@web')}}{{version('/uploads/main-video.mp4')}}">LINK </a>
+```
+
+This plugin generate file with timestamp, when file is changed the timestamp is changing and new version is downloaded:
+
+```
+<a href="http://some-domain.com/uploads/main-video.mp4?v=1667385206">LINK </a>
+```
+
+Also you can use this plugin with [PDF Generator](https://github.com/cooltronicpl/Craft-document-helpers/) when your hosting or server is caching PDF files.
+
+```
+<a href="{{alias('@web')}}{{version("/" ~ craft.documentHelper.pdf('_pdf/document.twig', 'file', 'pdf/book'  ~ '.pdf'  ,entry, pdfOptions))}}">LINK </a>
+```
+
+This generate PDF with timestamp and caching policy problems of your hosting is gone.
+
+```
+<a href="http://some-domain.com/pdf/book.pdf?v=1668157143">LINK </a>
+```
 
 ## Information about paths
 
