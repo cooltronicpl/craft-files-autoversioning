@@ -86,9 +86,9 @@ The MIT License (MIT)
 
 Copyright (c) 2022 CoolTRONIC.pl sp. z o.o. by Pawel Potacki
 
-More about CoolTRONIC.pl sp. z o.o. Interactive Agency https://cooltronic.pl/
+More about [CoolTRONIC.pl sp. z o.o. Interactive Agency](https://cooltronic.pl/)
 
-More about main developer Pawel Potacki https://potacki.com/
+More about [main developer Pawel Potacki](https://potacki.com/)
 
 CoolTRONIC.pl sp. z o.o., hereby holds all copyright interest in the program “Static Files Autoversioning plugin” written by Pawel Potacki.
 
