@@ -1,5 +1,7 @@
 # Static Files Autoversioning plugin for Craft CMS 3.x or 4.x
 
+With ❤ by [CoolTRONIC.pl sp. z o.o.](https://cooltronic.pl) by [Pawel Potacki](https://potacki.com)
+
 ![Icon](resources/black.png#gh-light-mode-only)
 ![Icon](resources/white.png#gh-dark-mode-only)
 
@@ -77,8 +79,6 @@ This generate PDF with timestamp and caching policy problems of your hosting is 
 ## Information about paths
 
 The plugin serch files to version in @web directory by default, and build.txt in root path.
-
-With ❤ by [CoolTRONIC.pl sp. z o.o.](https://cooltronic.pl) by [Pawel Potacki](https://potacki.com)
 
 ## License
 
