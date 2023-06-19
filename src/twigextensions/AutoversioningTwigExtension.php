@@ -11,19 +11,21 @@
 namespace cooltronicpl\autoversioning\twigextensions;
 
 use Craft;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
- * @author    cooltronicpl
- * @package   Craft3AssetsAutoversioning
- * @since     0.1
+ * @author    CoolTRONIC.pl sp. z o.o. https://cooltronic.pl
+ * @author    Pawel Potacki https://potacki.com
+ * @package   AutoversioningTwigExtension
+ * @since     1.0.0
  */
-class AutoversioningTwigExtension extends \Twig_Extension
+class AutoversioningTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
 
     private $_buildId = null;
-
 
     public function getName()
     {
@@ -32,41 +34,62 @@ class AutoversioningTwigExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return [
-            new \Twig_SimpleFunction('version', [$this, 'versioningFile']),
-        ];
+        return array(
+            new TwigFunction('version', [$this, 'versioningFile']),
+            new TwigFunction('versionTimestamp', [$this, 'versioningTimestamp']),
+            new TwigFunction('versionString', [$this, 'versioningString']),
+            new TwigFunction('versionCustom', [$this, 'versioningCustom']),
+
+        );
     }
 
     public function versioningFile($file)
     {
-        if ($this->_buildId === null)
-        {
-            if (file_exists(Craft::getAlias('@root') .'/build.txt'))
-            {
-                $build = $this->_buildId = trim(file_get_contents(Craft::getAlias('@root').'/build.txt'));
-            }
-            else
-            {
+        if ($this->_buildId === null) {
+            if (file_exists(Craft::getAlias('@root') . '/build.txt')) {
+                $build = $this->_buildId = trim(file_get_contents(Craft::getAlias('@root') . '/build.txt'));
+            } else {
                 $this->_buildId = false;
             }
         }
 
-        if ($this->_buildId === false)
-        {
-            
-            if (strpos($file, '/') !== 0 || !file_exists(Craft::getAlias('@webroot') .'/'.$file))
-            {
+        if ($this->_buildId === false) {
+
+            if (strpos($file, '/') !== 0 || !file_exists(Craft::getAlias('@webroot') . '/' . $file)) {
                 return $file;
-            }     
-            $build = filemtime(Craft::getAlias('@webroot') .'/'.$file);
-        
-        }
-        else
-        {
+            }
+            $build = filemtime(Craft::getAlias('@webroot') . '/' . $file);
+
+        } else {
             $build = $this->_buildId;
         }
-
-        return $file.'?v='.$build;
+        return $file . '?v=' . $build;
     }
 
+    public function versioningCustom($file, $buildFile)
+    {
+        if (file_exists(Craft::getAlias('@root') . '/' . $buildFile )) {
+            $buildCustom = trim(file_get_contents(Craft::getAlias('@root') . '/' . $buildFile));
+        }
+        if(!isset($buildCustom)){
+            $buildCustom="cannot-load-custom-build-file";
+        }
+        return $file . '?v=' . $buildCustom;
+    }
+
+
+    public function versioningTimestamp($file)
+    {
+
+        if (strpos($file, '/') !== 0 || !file_exists(Craft::getAlias('@webroot') . '/' . $file)) {
+            return $file;
+        }
+        $build = filemtime(Craft::getAlias('@webroot') . '/' . $file);
+        return $file . '?v=' . $build;
+    }
+
+    public function versioningString($file, $string)
+    {
+        return $file . '?v=' . $string;
+    }
 }

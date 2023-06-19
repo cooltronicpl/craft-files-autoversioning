@@ -43,7 +43,7 @@ class Autoversioning extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '0.1';
+    public $schemaVersion = '1.1';
 
     // Public Methods
     // =========================================================================
@@ -67,14 +67,6 @@ class Autoversioning extends Plugin
             }
         );
 
-        Craft::info(
-            Craft::t(
-                'craft3-files-autoversioning',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
 
     // Protected Methods

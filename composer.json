@@ -1,25 +1,20 @@
 {
   "name": "cooltronicpl/craft-files-autoversioning",
-  "description": "This extesnion add parameter to refresh static files from files or from an external files",
-  "version": "1.0.0",
+  "description": "A simple yet powerful Twig extension for CraftCMS. It assists in cache-busting your assets, ensuring that users always receive the latest versions of your files.",
+  "version": "1.1.0",
   "type": "craft-plugin",
-  "keywords": [
-    "craft",
-    "cms",
-    "craftcms",
-    "craft-plugin",
-    "assets",
-    "cache"
-  ],
+  "keywords": ["craftcms", "craft", "plugin", "twig", "extension", "cache-busting", "assets", "versioning"],
   "license": "MIT",
   "authors": [
     {
-      "name": "cooltronicpl",
-      "homepage": "https://cooltronic.pl"
+      "name": "CoolTRONIC.pl sp. z o.o. (LLC)",
+      "homepage": "https://cooltronic.pl",
+      "role": "Maintainer"
     },
     {
-        "name": "Paweł Potacki",
-        "homepage": "https://cooltronic.pl"
+      "name": "Paweł Potacki",
+      "homepage": "https://potacki.com",
+      "role": "Developer"
     }
   ],
   "support": {
