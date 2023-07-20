@@ -28,7 +28,7 @@ To install the plugin, navigate to your Craft project in your terminal:
 cd /path/to/craftcms-project
 composer require cooltronicpl/craft-files-autoversioning
 ```
-Then, in the control panel, navigate to Settings → Plugins and click the “install” button for **Static Files Autoversioning**. Also you can make easy install from Craft CMS Plugin Store.
+Then, in the control panel, navigate to Settings → Plugins and click the “install” button for **Static Files Autoversioning**. Also you can make easy install from [Craft CMS Plugin Store](https://plugins.craftcms.com/craft3-files-autoversioning).
 
 ## Version Number Assignment
 
