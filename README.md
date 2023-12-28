@@ -46,10 +46,10 @@ To install the plugin, navigate to your Craft project in your terminal:
 cd /path/to/my-project
 
 # tell Composer to load the plugin
-composer require cooltronicpl/static-files-autoversioning
+composer require cooltronicpl/craft-files-autoversioning
 
 # tell Craft to install the plugin
-./craft install/plugin static-files-autoversioning
+./craft install/plugin craft3-files-autoversioning
 ```
 
 ## Usage
