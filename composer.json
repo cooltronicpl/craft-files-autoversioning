@@ -1,10 +1,16 @@
 {
   "name": "cooltronicpl/craft-files-autoversioning",
   "description": "A simple yet powerful Twig extension for CraftCMS. It assists in cache-busting your assets, ensuring that users always receive the latest versions of your files.",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "type": "craft-plugin",
-  "keywords": ["craftcms", "craft", "plugin", "twig", "extension", "cache-busting", "assets", "versioning"],
-  "license": "MIT",
+  "keywords": [
+    "static-files-autoversioning",
+    "craft-cms-cache-busting-plugin",
+    "twig-extension-for-asset-versioning",
+    "craft-cms-static-asset-optimization",
+    "cache-busting-and-versioning-for-craft-cms"
+  ],
+  "license": "GPL-3.0-or-later",
   "authors": [
     {
       "name": "CoolTRONIC.pl sp. z o.o. (LLC)",
@@ -23,7 +29,7 @@
     "issues": "https://github.com/cooltronicpl/craft-files-autoversioning/issues"
   },
   "require": {
-    "craftcms/cms": "^4.0.0"
+    "craftcms/cms": "^5.0.0.alpha|^4.0.0"
   },
   "autoload": {
     "psr-4": {

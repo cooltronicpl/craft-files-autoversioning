@@ -1,134 +1,151 @@
-# Static Files Autoversioning Plugin for Craft CMS 3.x or 4.x
+# Static Files Autoversioning Plugin for Craft CMS
 
-Brought to you with love by [CoolTRONIC.pl sp. z o.o. (LLC)](https://cooltronic.pl) and [Pawel Potacki](https://potacki.com)
+This plugin is a Twig extension that helps you cache-bust your static assets, such as CSS, JS, images, videos, or PDFs. It appends a version number to the asset URL, based on either a build number or the file’s last modified time. This ensures that your users always receive the most recent version of your files, without having to clear their browser cache.
 
-![Icon](resources/black.png#gh-light-mode-only)
-![Icon](resources/white.png#gh-dark-mode-only)
+<picture>
+  <source srcset="resources/black.png" media="(prefers-color-scheme: light)">
+  <source srcset="resources/white.png" media="(prefers-color-scheme: dark)">
+  <img alt="Static Files Autoversioning Plugin for Craft CMS" src="resources/white.png" width="60">
+</picture>
 
-A really basic Twig extension development plugin for CraftCMS that helps you cache-bust your assets.
+## Table of Contents
 
-The Static Files Autoversioning plugin is a fundamental Twig extension development tool for CraftCMS. It assists you in cache-busting your assets, ensuring that your users always receive the most recent version of your files.
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Advanced Usage](#advanced-usage)
+   - [Versioning from a String](#versioning-from-a-string)
+   - [Versioning from a Timestamp](#versioning-from-a-timestamp)
+   - [Versioning from a Custom Text File](#versioning-from-a-custom-text-file)
+   - [Versioning with PDF Generator or Varnish Cache](#versioning-with-pdf-generator-or-varnish-cache)
+   - [Note about paths](#note-about-paths)
+5. [License](#license)
+6. [Credits](#credits)
 
-## Overview
+## Features
 
-The plugin provides a Twig function that appends a build number or the file's last modified time to the filename. This forces the browser to download the updated asset file, effectively busting the cache.
-
-## Prerequisites
-
-Craft CMS >= 3.0.0 for the 1.x branch
-Craft CMS >= 4.0.0 for the 2.x branch
+- Compatible with Craft CMS 3.x, 4.x and 5.0.0.alpha
+- Supports multiple file types and caching policies
+- Allows custom versioning from strings or text files
+- Integrates with PDF Generator and Varnish Cache plugins
 
 ## Installation
+
+You can install this plugin from the [Craft Plugin Store](https://plugins.craftcms.com/craft3-files-autoversioning) or with Composer.
+
+### From the Plugin Store
+
+Go to the Plugin Store section of your Craft control panel and search for “Static Files Autoversioning”. Then click on the “Install” button in its modal window.
 
 ### Project Setup
 
 To install the plugin, navigate to your Craft project in your terminal:
 
 ```shell
-cd /path/to/craftcms-project
-composer require cooltronicpl/craft-files-autoversioning
+# go to the project directory
+cd /path/to/my-project
+
+# tell Composer to load the plugin
+composer require cooltronicpl/static-files-autoversioning
+
+# tell Craft to install the plugin
+./craft install/plugin static-files-autoversioning
 ```
-Then, in the control panel, navigate to Settings → Plugins and click the “install” button for **Static Files Autoversioning**. Also you can make easy install from Craft CMS Plugin Store.
-
-## Version Number Assignment
-
-The build number appended to the asset URL is read from a file named build.txt located in your root project folder (alongside config, templates, etc.). You can add the build number to this file using your deployment script. For instance, if you're using CodeShip, you can use the following command:
-
-```shell
-echo -n "${CI_BUILD_NUMBER}" > build.txt
-```
-
-If the `build.txt` file doesn't exist, the plugin will use the file's last modified time as the version number.
 
 ## Usage
 
-You can use the new Twig function `version()` in your template. For instance:
+To use this plugin, you need to call the `version()` function in your template, passing the asset path as an argument. For example:
 
 ```twig
-<link rel="stylesheet" href="{{ version('/css/styles.css')}}">
+<link rel="stylesheet" href="{{ version('/css/styles.css') }}">
 ```
 
-will result this:
+This will output something like:
 
 ```html
 <link rel="stylesheet" href="/css/styles.css?v=12345678" />
 ```
 
-### Advanced Usage
+The version number (`v=12345678`) is determined by reading a file named `build.txt` in your root project folder (alongside `config`, `templates`, etc.). You can create and update this file using your deployment script. For instance, if you’re using CodeShip, you can use the following command:
 
-If you have a caching policy for multiple files, such as videos or PDFs, you can use this plugin to pass the actual file after updating the link. For example:
-
-```
-<a href="{{alias('@web')}}{{version('/uploads/main-video.mp4')}}">LINK </a>
+```shell
+echo -n "${CI_BUILD_NUMBER}" > build.txt
 ```
 
-This will generate a file with a timestamp. When the file changes, the timestamp changes and a new version is downloaded:
+## Advanced Usage
 
-```
-<a href="http://some-domain.com/uploads/main-video.mp4?v=1667385206">LINK </a>
-```
-
-## Versioning from Provided String
-
-This can be useful when you have a build.txt file and want to version a file from an input string. For example:
+### Versioning from a String
+ 
+If you want to use a custom string as the version number, you can use the `versionString()` function, passing the asset path and the string as arguments. For example:
 
 ```twig
-<link rel="stylesheet" href="{{ versionString('/css/styles.css', 'customstring')}}">
+<link rel="stylesheet" href="{{ versionString('/css/styles.css', 'customstring') }}">
 ```
 
-This function returns a text value in the versioning v parameter, i.e., `customstring`. In this example, it results in the following file path:
+This will output something like:
+
+```
+<link rel="stylesheet" href="/css/styles.css?v=customstring">
+```
+
+### Versioning from a Timestamp
+
+If you want to use the file’s last modified time as the version number, regardless of the existence of the build.txt file, you can use the `versionTimestamp()` function, passing the asset path as an argument. For example:
+
+```twig
+<link rel="stylesheet" href="{{ versionTimestamp('/css/styles.css') }}">
+```
+
+This will output something like:
 
 ```html
-<link rel="stylesheet" href="/css/styles.css?v=customstring" />
+<link rel="stylesheet" href="/css/styles.css?v=1667385206">
 ```
 
-## Versioning Only from Timestamp
+### Versioning from a Custom Text File
 
-This can be useful when you have a `build.txt` file and want to version a file from a timestamp. For example:
+If you want to use the content of a custom text file as the version number, you can use the `versionCustom()` function, passing the asset path and the text file name as arguments. The text file should be located in your root project folder. For example:
 
 ```twig
-<link rel="stylesheet" href="{{ versionTimestamp('/css/styles.css')}}">
+<link rel="stylesheet" href="{{ versionCustom('/css/styles.css', 'mods.txt') }}">
 ```
 
+This will output something like:
 
-## Versioning from Custom Text Files
+```html
+<link rel="stylesheet" href="/css/styles.css?v=modded">
 
-This can be useful when you have a build.txt file and want to version a file from a specific text file, like mods.txt, which should be located in your root Craft CMS project folder. For example:
+```
+
+Assuming that the `mods.txt` file contains the word “modded”.
+
+### Versioning with PDF Generator or Varnish Cache
+
+You can also use this plugin with [PDF Generator](https://github.com/cooltronicpl/Craft-document-helpers/) when your hosting or server is caching PDF files. Or your files are cached by caching plugins like [Varnish Cache](https://github.com/cooltronicpl/varnishcache/).
 
 ```twig
-<link rel="stylesheet" href="{{ versionCustom('/css/styles.css', 'mods.txt')}}">
+<a href="{{alias('@web')}}{{version("/" ~ craft.documentHelper.pdf('_pdf/document.twig', 'file', 'pdf/book'  ~ '.pdf'  ,entry, pdfOptions))}}">LINK</a>
 ```
 
-This function returns the text value inside `@root` in the `mods.txt` file.
+This will output something like:
 
-### How to Use with PDF Generator or Varnish Cache and Other Caching Solutions?
-
-You can also use this plugin with [PDF Generator](https://github.com/cooltronicpl/Craft-document-helpers/) when your hosting or server is caching PDF files. Or your files is cached by caching plugins like [Varnish Cache](https://github.com/cooltronicpl/varnishcache/).
-
-```
-<a href="{{alias('@web')}}{{version("/" ~ craft.documentHelper.pdf('_pdf/document.twig', 'file', 'pdf/book'  ~ '.pdf'  ,entry, pdfOptions))}}">LINK </a>
+```html
+<a href="http://some-domain.com/pdf/book.pdf?v=1668157143">LINK</a>
 ```
 
-This generates a PDF with a timestamp, solving any caching policy issues with your hosting.
+This generates a PDF with a version number, solving any caching policy issues with your hosting.
 
-```
-<a href="http://some-domain.com/pdf/book.pdf?v=1668157143">LINK </a>
-```
+### Note about paths
 
-## Information about Paths
+By default, the plugin searches for files to version in the `@webroot` directory, and for the `build.txt` or custom text file in the `@root` path.
 
-By default, the plugin searches for files to version in the @web directory, and for the `build.txt` or custom text file in the `@root` path.
+**Note:** You can learn more about the `@webroot` and `@root` aliases and how to configure them in the Craft CMS documentation.
 
 ## License
 
-The MIT License (MIT)
+This plugin is licensed under the [GPLv3 license](LICENSE.md).
 
-Copyright (c) 2022 CoolTRONIC.pl sp. z o.o. by Pawel Potacki
+## Credits
 
-More about [CoolTRONIC.pl sp. z o.o. (LLC) Interactive Agency](https://cooltronic.pl/)
+This plugin is brought to you with love by  [CoolTRONIC.pl sp. z o.o. (LLC) Interactive Agency](https://cooltronic.pl/) and [Pawel Potacki](https://potacki.com/).
 
-More about [main developer Pawel Potacki](https://potacki.com/)
-
-CoolTRONIC.pl sp. z o.o., hereby holds all copyright interest in the program “Static Files Autoversioning plugin” written by Pawel Potacki.
-
-LICENSE.md file contains full License notices.
